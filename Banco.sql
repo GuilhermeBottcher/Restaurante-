@@ -1,7 +1,7 @@
 create table comanda (
   id_comanda serial primary key,
   num_mesa int,
-   quantidade int,
+  quantidade int,
 	valor FLOAT
 );
 
@@ -9,6 +9,7 @@ CREATE TABLE cardapio (
     valor FLOAT,
     cod_item SERIAL PRIMARY KEY,
     tipo VARCHAR(50),
+    nome VARCHAR(50),
     descricao VARCHAR(100)
 );
 
