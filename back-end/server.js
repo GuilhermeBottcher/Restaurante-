@@ -2,6 +2,7 @@ import express from "express";
 import banco from "./banco.js";
 import cors from "cors";
 import cardapio from "./controller/Cardapio.js";
+import Comanda from "./controller/Comanda.js";
 
 try{
     await banco.authenticate();
@@ -19,5 +20,12 @@ app.get("/cardapio", cardapio.listarCardapio);
 app.get("/cardapio/:cod_item", cardapio.selecionarItem);
 app.post("/cardapio", cardapio.criarItem);
 app.patch("/cardapio/:cod_item", cardapio.criarItem)
+
+
+//metodos comanda
+
+app.get("/comanda", Comanda.listarComandas);
+app.get("/comanda/:id_comanda", Comanda.selecionarComanda);
+app.post("/comanda", Comanda.criarComanda);
 
 app.listen(4000);
