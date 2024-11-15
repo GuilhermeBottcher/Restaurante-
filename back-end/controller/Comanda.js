@@ -27,7 +27,6 @@ async function criarComanda(request, response) {
     await comanda
         .create({
             num_mesa: request.body.nummesa,
-            quantidade: request.body.quantidade,
             valor: request.body.valor
         })
         .then(resultado => response.status(201).json(resultado))

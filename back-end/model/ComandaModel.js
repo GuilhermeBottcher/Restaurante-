@@ -12,10 +12,6 @@ export default banco.define("comanda", {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    quantidade: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
     valor: {
         type: Sequelize.FLOAT,
         allowNull: false

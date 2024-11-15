@@ -1,8 +1,7 @@
 create table comanda (
   id_comanda serial primary key,
   num_mesa int,
-  quantidade int,
-	valor FLOAT
+  valor FLOAT
 );
 
 CREATE TABLE cardapio (
@@ -10,17 +9,23 @@ CREATE TABLE cardapio (
     cod_item SERIAL PRIMARY KEY,
     tipo VARCHAR(50),
     nome VARCHAR(50),
-    descricao VARCHAR(100)
+    descricao VARCHAR(100),
+    urlImagen VARCHAR(100)
 );
 
 
-create table possui (
-  id_comanda int,
+create table pedido (
+  id_pedido serial primary key,
   cod_item int,
-  primary key (id_comanda, cod_item),
+  id_comanda int,
+  quantidade int,
+  status BOOLEAN NOT NULL DEFAULT TRUE, --se for false está em preparo se for true está pronto
+  tipo BOOLEAN NOT NULL DEFAULT TRUE, -- se for bebida false vai para copa se for prato true vai para cozinha
   constraint fk_comanda foreign key (id_comanda)references comanda(id_comanda),
   constraint fk_cardapio foreign key (cod_item) references cardapio(cod_item)
 );
+
+
 
 create table users (
     id_usuario serial primary key,
@@ -31,10 +36,10 @@ create table users (
 	
 
 
-INSERT INTO comanda (num_mesa, quantidade) VALUES
-(1, 5),
-(2, 3),
-(3, 4);
+INSERT INTO comanda (num_mesa) VALUES
+(1),
+(2),
+(3);
 
 
 INSERT INTO cardapio (valor, tipo, descricao) VALUES
@@ -44,17 +49,16 @@ INSERT INTO cardapio (valor, tipo, descricao) VALUES
 (14.90, 'Sobremesa', 'Pudim de Leite');
 
 
-INSERT INTO possui (id_comanda, cod_item) VALUES
-(1, 1),
-(1, 2),
-(2, 3),
-(3, 4);
+INSERT INTO pedido (id_comanda, cod_item, quantidade) VALUES
+(1, 1, 1),
+(1, 2, 1),
+(2, 3, 1),
+(3, 4, 1);
 
 INSERT INTO users (nome, email, senha) VALUES
 ('João Silva', 'joao@email.com', 'senha123'),
 ('Maria Oliveira', 'maria@email.com', 'senha456'),
 ('Pedro Santos', 'pedro@email.com', 'senha789');
-
 
 
 
