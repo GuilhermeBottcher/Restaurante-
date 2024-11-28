@@ -20,7 +20,7 @@ export default banco.define("pedido", {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: 'Caradapio',
+            model: 'Cardapio',
             key: 'cod_item'
         }
     },
@@ -29,11 +29,11 @@ export default banco.define("pedido", {
         allowNull: false
     },
     status: {
-        type: Sequelize.BOOL,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
     },
     tipo: {
-        type: Sequelize.BOOL,
+        type: Sequelize.BOOLEAN,
         allowNull: false
     }
 

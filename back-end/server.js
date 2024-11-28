@@ -34,9 +34,9 @@ app.post("/comanda", Comanda.criarComanda);
 app.get("/pedido", Pedido.listarpedidos);
 app.get("/pedido/:id_pedido", Pedido.selecionaritem);
 app.get("/pedidos/:id_comanda", Pedido.selecionarComandaitem);
+app.get("/cozinha/pedidos", Pedido.listarPedidosCozinha);
+app.get("/copa/pedidos", Pedido.listarPedidosCopa);
 app.post("/pedido", Pedido.criarpedido);
 app.patch("/pedido/:id_pedido", Pedido.alterarpedido);
-
-
 
 app.listen(4000);
