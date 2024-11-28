@@ -15,5 +15,9 @@ export default banco.define("comanda", {
     valor: {
         type: Sequelize.FLOAT,
         allowNull: false
+    },
+    fechada: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 })
