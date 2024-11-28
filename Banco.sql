@@ -1,3 +1,24 @@
+CREATE OR REPLACE FUNCTION atualizar_valor_comanda()
+RETURNS TRIGGER AS $$
+BEGIN
+
+    UPDATE comanda
+    SET valor = COALESCE(valor, 0) + (
+        SELECT c.valor * NEW.quantidade
+        FROM cardapio c
+        WHERE c.cod_item = NEW.cod_item
+    )
+    WHERE id_comanda = NEW.id_comanda;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_atualizar_valor_comanda
+AFTER INSERT ON pedido
+FOR EACH ROW
+EXECUTE FUNCTION atualizar_valor_comanda();
+
 create table comanda (
   id_comanda serial primary key,
   num_mesa int,
