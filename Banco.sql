@@ -2,6 +2,7 @@ create table comanda (
   id_comanda serial primary key,
   num_mesa int,
   valor FLOAT
+  fechada BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE cardapio (
