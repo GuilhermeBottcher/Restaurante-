@@ -83,5 +83,41 @@ async function alterarpedido(request, response) {
         .catch(erro => response.status(400).json(erro));
 }
 
+// lista pedidos da cozinha
+async function listarPedidosCozinha(request, response) {
+    await pedido
+        .findAll({
+            where: {
+                tipo: true // verifica se o pedido é feito na cozinha
+            }
+        })
+        .then(resultado => {
+            if (resultado.length > 0){
+                response.status(200).json(resultado)
+            } else {
+                response.status(404).json({mensagem: "Nenhum pedido para a cozinha"})
+            }
+        })
+        .catch(erro => response.status(500).json(erro))
+}
 
-export default { listarpedidos, selecionaritem, criarpedido, alterarpedido, selecionarComandaitem };
+// lista pedidos da copa
+async function listarPedidosCopa(request, response) {
+    await pedido
+        .findAll({
+            where: {
+                tipo: false // verifica se o pedido é feito na copa
+            }
+        })
+        .then(resultado => {
+            if (resultado.length > 0){
+                response.status(200).json(resultado)
+            } else {
+                response.status(404).json({mensagem: "Nenhum pedido para a copa"})
+            }
+        })
+        .catch(erro => response.status(500).json(erro))
+}
+
+
+export default { listarpedidos, selecionaritem, criarpedido, alterarpedido, selecionarComandaitem, listarPedidosCozinha, listarPedidosCopa };
