@@ -36,6 +36,7 @@ app.get("/pedido/:id_pedido", Pedido.selecionaritem);
 app.get("/pedidos/:id_comanda", Pedido.selecionarComandaitem);
 app.get("/cozinha/pedidos", Pedido.listarPedidosCozinha);
 app.get("/copa/pedidos", Pedido.listarPedidosCopa);
+app.get("/pedidos/status/pendentes", Pedido.listarPedidosPendentes)
 app.post("/pedido", Pedido.criarpedido);
 app.patch("/pedido/:id_pedido", Pedido.alterarpedido);
 

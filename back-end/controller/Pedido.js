@@ -119,5 +119,22 @@ async function listarPedidosCopa(request, response) {
         .catch(erro => response.status(500).json(erro))
 }
 
+async function listarPedidosPendentes(request, response) {
+    await pedido
+        .findAll({
+            where: {
+                status: false
+            }
+        })
+        .then(resultado => {
+            if (resultado.length > 0){
+                response.status(200).json(resultado)
+            } else {
+                response.status(404).json({mensagem: "Nenhum pedido foi feito ainda"})
+            }
+        })
+        .catch(erro => response.status(500).json(erro))
+}
 
-export default { listarpedidos, selecionaritem, criarpedido, alterarpedido, selecionarComandaitem, listarPedidosCozinha, listarPedidosCopa };
+
+export default { listarpedidos, selecionaritem, criarpedido, alterarpedido, selecionarComandaitem, listarPedidosCozinha, listarPedidosCopa, listarPedidosPendentes };

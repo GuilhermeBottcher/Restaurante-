@@ -36,5 +36,4 @@ export default banco.define("pedido", {
         type: Sequelize.BOOLEAN,
         allowNull: false
     }
-
 })
