@@ -19,6 +19,16 @@ AFTER INSERT ON pedido
 FOR EACH ROW
 EXECUTE FUNCTION atualizar_valor_comanda();
 
+CREATE OR REPLACE FUNCTION validar_login(email_input VARCHAR, senha_input VARCHAR)
+RETURNS TABLE(id_usuario INT, nome VARCHAR, email VARCHAR) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT id_usuario, nome, email
+    FROM users
+    WHERE email = email_input AND senha = senha_input;
+END;
+$$ LANGUAGE plpgsql;
+
 create table comanda (
   id_comanda serial primary key,
   num_mesa int,
