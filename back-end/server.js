@@ -4,6 +4,7 @@ import cors from "cors";
 import cardapio from "./controller/Cardapio.js";
 import Comanda from "./controller/Comanda.js";
 import Pedido from "./controller/Pedido.js";
+import Usuario from "./controller/User.js";
 
 try{
     await banco.authenticate();
@@ -39,5 +40,9 @@ app.get("/copa/pedidos", Pedido.listarPedidosCopa);
 app.get("/pedidos/status/pendentes", Pedido.listarPedidosPendentes)
 app.post("/pedido", Pedido.criarpedido);
 app.patch("/pedido/:id_pedido", Pedido.alterarpedido);
+
+// métodos usuario
+app.post("/login", Usuario.validarLogin);
+app.post("/usuarios", Usuario.criarUsuario);
 
 app.listen(4000);
