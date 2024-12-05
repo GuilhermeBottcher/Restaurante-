@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import banco from "../banco";
+import banco from "../banco.js";
 
 export default banco.define("users", {
     id_usuario: {

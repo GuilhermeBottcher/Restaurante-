@@ -14,8 +14,15 @@ try{
 }
 
 const app = express();
+
+import routes from './src/routes.js';
+
 app.use(express.json());
 app.use(cors());
+app.use(routes);
+
+app.get('/', (req,res)=>{
+    res.send('hello word')})
 
 // Métodos Cardapio
 app.get("/cardapio", cardapio.listarCardapio);
@@ -45,4 +52,4 @@ app.patch("/pedido/:id_pedido", Pedido.alterarpedido);
 app.post("/login", Usuario.validarLogin);
 app.post("/usuarios", Usuario.criarUsuario);
 
-app.listen(4000);
+app.listen(4000,()=>{console.log("servito rodando")});
