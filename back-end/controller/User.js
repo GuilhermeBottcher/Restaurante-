@@ -1,53 +1,31 @@
-import bcrypt from "bcrypt";
-import user from "../model/UserModel.js"; 
-
-async function validarLogin(req, res) {
-    const { email, senha } = req.body;
+import user from "../model/UserModel.js";
+import banco from "../banco.js";
+async function validarLogin(request, response) {
+    let { email, senha } = request.body;
 
     try {
-        // Verificando se os campos obrigatórios estão presentes
         if (!email || !senha) {
-            return res.status(400).json({ message: "Email e senha são obrigatórios." });
+            return response.status(400).json({ mensagem: "Email e senha são obrigatórios." });
         }
 
-        // Buscando o usuário pelo email
-        const usuario = await user.findOne({ where: { email: email } });
+        const resultado = await banco.query(
+            'SELECT id_usuario, nome, email FROM users WHERE email = :email_input AND senha = :senha_input',
+            {
+                replacements: { email_input: email, senha_input: senha },
+                type: banco.QueryTypes.SELECT
+            }
+        );
 
-        // Verificando se o usuário existe
-        if (!usuario) {
-            return res.status(401).json({ message: "Usuário não encontrado." });
+        if (resultado.length > 0) {
+            response.status(200).json({ mensagem: "Login realizado com sucesso!", usuario: resultado[0] });
+        } else {
+            response.status(401).json({ mensagem: "Email ou senha incorretos." });
         }
-
-        // Log para verificar os dados do usuário
-        console.log("Usuário encontrado:", usuario);
-
-        // Comparando a senha fornecida com a senha armazenada
-        const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
-
-        // Log para verificar a comparação da senha
-        console.log("Senha fornecida:", senha);
-        console.log("Senha armazenada:", usuario.senha);
-        console.log("Senha correta:", senhaCorreta);
-
-        if (!senhaCorreta) {
-            return res.status(401).json({ message: "Senha incorreta." });
-        }
-
-        // Respondendo com dados básicos do usuário
-        return res.status(200).json({
-            message: "Login bem-sucedido.",
-            usuario: {
-                id: usuario.id_usuario,
-                nome: usuario.nome,
-                email: usuario.email,
-            },
-        });
-    } catch (error) {
-        console.error("Erro ao validar login:", error); // Log para depuração
-        return res.status(500).json({ message: "Erro ao validar login.", error: error.message });
+    } catch (erro) {
+        console.error("Erro ao validar login:", erro);
+        response.status(500).json({ mensagem: "Erro ao tentar validar login.", erro: erro.message });
     }
 }
-
 
 
 
