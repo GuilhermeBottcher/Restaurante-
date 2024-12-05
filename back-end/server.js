@@ -5,6 +5,7 @@ import cardapio from "./controller/Cardapio.js";
 import Comanda from "./controller/Comanda.js";
 import Pedido from "./controller/Pedido.js";
 import Usuario from "./controller/User.js";
+import Relatorio from "./controller/Relatorio.js";
 
 try{
     await banco.authenticate();
@@ -52,4 +53,7 @@ app.patch("/pedido/:id_pedido", Pedido.alterarpedido);
 app.post("/login", Usuario.validarLogin);
 app.post("/usuarios", Usuario.criarUsuario);
 
-app.listen(4000,()=>{console.log("servito rodando")});
+// relatório
+app.get("/relatorios/vendas-diarias", Relatorio.relatorioVendasDiarias); // exemplo de query http://localhost:4000/relatorios/vendas-diarias?data=2024-11-04
+
+app.listen(4000);

@@ -1,26 +1,28 @@
 import user from "../model/UserModel.js";
 
-async function validarLogin(request, response) {
-    let { email, senha } = request.body;
-    
-    try {
-        const resultado = await banco.query(
-            'SELECT * FROM validar_login(:email_input, :senha_input)',
-            {
-                replacements: { email_input: email, senha_input: senha },
-                type: banco.QueryTypes.SELECT
-            }
-        );
+async function validarLogin(req, res) {
+    const { email, senha } = req.body;
 
-        if (resultado.length > 0) {
-            response.status(200).json({ mensagem: "Login realizado com sucesso!", usuario: resultado[0] });
-        } else {
-            response.status(401).json({ mensagem: "Email ou senha incorretos." });
+    try {
+        const usuario = await user.findOne({ where: { email: email } });
+
+        if (!usuario) {
+            return res.status(401).json({ message: "Usuário não encontrado" });
         }
-    } catch (erro) {
-        response.status(500).json({ mensagem: "Erro ao tentar validar login.", erro });
+
+
+        const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
+        
+        if (!senhaCorreta) {
+            return res.status(401).json({ message: "Senha incorreta" });
+        }
+
+        return res.status(200).json(usuario);  // Login bem-sucedido
+    } catch (error) {
+        return res.status(500).json({ message: "Erro ao validar login", error });
     }
 }
+
 
 async function criarUsuario(request, response) {
     let { nome, email, senha } = request.body;
