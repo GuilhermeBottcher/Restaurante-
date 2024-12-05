@@ -1,11 +1,15 @@
 import user from "../model/UserModel.js";
-
+import banco from "../banco.js";
 async function validarLogin(request, response) {
     let { email, senha } = request.body;
-    
+
     try {
+        if (!email || !senha) {
+            return response.status(400).json({ mensagem: "Email e senha são obrigatórios." });
+        }
+
         const resultado = await banco.query(
-            'SELECT * FROM validar_login(:email_input, :senha_input)',
+            'SELECT id_usuario, nome, email FROM users WHERE email = :email_input AND senha = :senha_input',
             {
                 replacements: { email_input: email, senha_input: senha },
                 type: banco.QueryTypes.SELECT
@@ -18,9 +22,11 @@ async function validarLogin(request, response) {
             response.status(401).json({ mensagem: "Email ou senha incorretos." });
         }
     } catch (erro) {
-        response.status(500).json({ mensagem: "Erro ao tentar validar login.", erro });
+        console.error("Erro ao validar login:", erro);
+        response.status(500).json({ mensagem: "Erro ao tentar validar login.", erro: erro.message });
     }
 }
+
 
 
 async function criarUsuario(request, response) {
