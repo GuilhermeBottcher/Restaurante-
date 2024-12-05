@@ -53,6 +53,7 @@ create table pedido (
   quantidade int,
   status BOOLEAN NOT NULL DEFAULT TRUE, --se for false está em preparo se for true está pronto
   tipo BOOLEAN NOT NULL DEFAULT TRUE, -- se for bebida false vai para copa se for prato true vai para cozinha
+  data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
   constraint fk_comanda foreign key (id_comanda)references comanda(id_comanda),
   constraint fk_cardapio foreign key (cod_item) references cardapio(cod_item)
 );
