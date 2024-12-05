@@ -5,6 +5,7 @@ import CadastroUsuario from '../pages/CadastroUsuario';
 import CustomTabBar from '../components/CustomTabBar';
 import { AuthProviderList } from '../context/authContext_list';
 import CadastroCardapio from '../pages/CadastroCardapio';
+import { Cozinha } from '../pages/Cozinha';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,6 +17,7 @@ export default function BottomRoutes() {
         <Tab.Screen name="Relatorio" component={Relatorio} />
         <Tab.Screen name="CadastroUsuario" component={CadastroUsuario}/>
         <Tab.Screen name="CadastroCardapio" component={CadastroCardapio}/>
+        <Tab.Screen name="Cozinha" component={Cozinha}/>
       </Tab.Navigator>
     </AuthProviderList>
   );
