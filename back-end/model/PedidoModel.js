@@ -1,7 +1,8 @@
 import { Sequelize } from "sequelize";
 import banco from "../banco.js";
+import cardapio from "./CardapioModel.js";
 
-export default banco.define("pedido", {
+export const pedido = banco.define("pedido", {
     id_pedido: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -16,7 +17,7 @@ export default banco.define("pedido", {
             key: 'id_comanda'
         }
     },
-     cod_item: {
+    cod_item: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -36,4 +37,9 @@ export default banco.define("pedido", {
         type: Sequelize.BOOLEAN,
         allowNull: false
     }
-})
+});
+
+// Relacionamento entre Pedido e Cardapio
+pedido.belongsTo(cardapio, { foreignKey: 'cod_item' });
+
+export default pedido;

@@ -101,12 +101,11 @@ async function listarPedidosCozinha(request, response) {
         .catch(erro => response.status(500).json(erro))
 }
 
-// lista pedidos da copa
 async function listarPedidosCopa(request, response) {
     await pedido
         .findAll({
             where: {
-                tipo: false // verifica se o pedido é feito na copa
+                tipo: false
             }
         })
         .then(resultado => {

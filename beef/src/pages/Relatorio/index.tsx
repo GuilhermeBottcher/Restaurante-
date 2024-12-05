@@ -33,6 +33,7 @@ export default function Inicial({ navigation }: { navigation: any }) {
 
             <View style={style.boxList}>
                 <Text style={style.title}>CADASTROS</Text>
+
                 <TouchableOpacity
                     style={style.card}
                     onPress={handleCadastroUsuario}
@@ -46,13 +47,16 @@ export default function Inicial({ navigation }: { navigation: any }) {
                 >
                     <Text style={style.cardText}>Cadastro de Cardápio</Text>
                 </TouchableOpacity>
+
                 <Text style={style.title}>PEDIDOS</Text>
+
                 <TouchableOpacity
                     style={style.card}
                     onPress={handleCozinha}
                 >
                     <Text style={style.cardText}>Cozinha</Text>
                 </TouchableOpacity>
+                
                 <TouchableOpacity
                     style={style.card}
                     onPress={handleCopa}
