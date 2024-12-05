@@ -15,8 +15,15 @@ try{
 }
 
 const app = express();
+
+import routes from './src/routes.js';
+
 app.use(express.json());
 app.use(cors());
+app.use(routes);
+
+app.get('/', (req,res)=>{
+    res.send('hello word')})
 
 // Métodos Cardapio
 app.get("/cardapio", cardapio.listarCardapio);

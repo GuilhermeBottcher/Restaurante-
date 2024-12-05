@@ -33,11 +33,20 @@ async function criarUsuario(request, response) {
     let { nome, email, senha } = request.body;
 
     try {
-        let usuario = await user.create({nome, email, senha});
-        response.status(201).json({mensagem: "Usuário cadastrado com sucesso!"});
+        let usuario = await user.create({ nome, email, senha });
+        response.status(201).json({ mensagem: "Usuário cadastrado com sucesso!" });
     } catch (error) {
-        response.status(500).json({mensagem: "Erro ao cadastrar usuário."});
+        response.status(500).json({ mensagem: "Erro ao cadastrar usuário." });
     }
 }
 
-export default { validarLogin, criarUsuario}
+async function listarUsuarios(req, res) {
+    try {
+        const usuarios = await user.findAll(); 
+        res.status(200).json(usuarios); 
+    } catch (erro) {
+        res.status(500).json({ mensagem: "Erro ao listar usuários.", erro }); 
+    }
+}
+
+export default { validarLogin, criarUsuario, listarUsuarios };
