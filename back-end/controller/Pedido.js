@@ -97,7 +97,8 @@ async function listarPedidosCozinha(request, response) {
                 }
             ],
             where: {
-                tipo: true // verifica se o pedido é feito na cozinha
+                tipo: true, // verifica se o pedido é feito na cozinha
+                status: false
             }
         })
         .then(resultado => {
@@ -110,7 +111,6 @@ async function listarPedidosCozinha(request, response) {
         .catch(erro => response.status(500).json(erro))
 }
 
-// lista pedidos da copa
 async function listarPedidosCopa(request, response) {
     await pedido
         .findAll({
