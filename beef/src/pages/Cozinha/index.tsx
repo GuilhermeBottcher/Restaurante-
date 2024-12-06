@@ -4,8 +4,19 @@ import axios from "axios";
 import Logo from "../../assets/logo_3.png";
 import { Flag } from "../../components/flag"; 
 
+type Pedido = {
+  id_pedido: number;
+  id_comanda: number;
+  quantidade: number;
+  status: boolean;
+  itens?: {
+    descricao: string;
+    nome: string;
+  };
+};
+
 export const Cozinha = () => {
-  const [pedidos, setPedidos] = useState([]);
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
