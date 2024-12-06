@@ -33,7 +33,10 @@ export const Copa = () => {
         <Text style={styles.label}>Comanda:</Text> {item.id_comanda}
       </Text>
       <Text style={styles.text}>
-        <Text style={styles.label}>Item:</Text> {item.cod_item}
+        <Text style={styles.label}>Item:</Text> {item.itens ? item.itens.nome : "Nome não disponível"}
+      </Text>
+      <Text style={styles.text}>
+        <Text style={styles.label}>Descrição:</Text> {item.itens ? item.itens.descricao : "Descrição não disponível"}
       </Text>
       <Text style={styles.text}>
         <Text style={styles.label}>Quantidade:</Text> {item.quantidade}
