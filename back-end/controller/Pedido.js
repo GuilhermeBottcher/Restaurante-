@@ -164,25 +164,33 @@ async function listarPedidosPendentes(request, response) {
 }
 
 async function alterarStatusPedido(request, response) {
-    await pedido
-        .update(
+    const { status } = request.body; // Extrai o status do corpo da requisição
+
+    if (status === undefined) {
+        return response.status(400).json({ mensagem: "Status não fornecido." });
+    }
+
+    try {
+        const resultado = await pedido.update(
             {
-                status: true
+                status: status, // Atualiza o status do pedido
             },
             {
                 where: {
-                    id_pedido: request.params.id_pedido
-                }
-            }
-        )
-        .then(resultado => {
-            if (resultado[0] === 1) { // Verifica se alguma linha foi alterada
-                response.status(200).json({ mensagem: "Comanda atualizada com sucesso" });
-            } else {
-                response.status(404).json({ mensagem: "Comanda não encontrada" });
-            }
-        })
-        .catch(erro => response.status(400).json(erro));
+                    id_pedido: request.params.id_pedido, // Atualiza o pedido com o id especificado
+                },
+            });
+
+        if (resultado[0] === 1) { // Verifica se uma linha foi alterada
+            response.status(200).json({ mensagem: "Status do pedido atualizado com sucesso" });
+        } else {
+            response.status(404).json({ mensagem: "Pedido não encontrado" });
+        }
+    } catch (erro) {
+        console.error(erro); // Para melhor debug
+        response.status(400).json({ mensagem: "Erro ao atualizar o status do pedido", erro });
+    }
 }
+
 
 export default { listarpedidos, selecionaritem, criarpedido, alterarpedido, selecionarComandaitem, listarPedidosCozinha, listarPedidosCopa, listarPedidosPendentes, alterarStatusPedido };

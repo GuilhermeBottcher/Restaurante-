@@ -4,22 +4,25 @@ import { Picker } from '@react-native-picker/picker';
 import axios from "axios";
 
 export default function CadastroItem() {
+    const [nome, setnome] = useState("");
     const [descricao, setDescricao] = useState("");
     const [valor, setValor] = useState("");
     const [tipo, setTipo] = useState(""); 
     const [feedback, setFeedback] = useState<string | null>(null);
 
     const handleCadastro = async () => {
-        if (!descricao || !valor || !tipo) {
+        if (!descricao || !valor || !tipo || !nome) {
             Alert.alert("Erro", "Todos os campos são obrigatórios.");
             return;
         }
+        const valorNumber = parseFloat(valor);
 
         try {
             const response = await axios.post("http://localhost:4000/cardapio", {
                 descricao,
-                valor: parseFloat(valor),
+                valor: valorNumber,
                 tipo,
+                nome,
             });
 
             if (response.status === 200) {
@@ -27,6 +30,7 @@ export default function CadastroItem() {
                 setDescricao("");
                 setValor("");
                 setTipo("");
+                setnome("");
             } else {
                 setFeedback("Erro ao cadastrar item. Tente novamente.");
             }
@@ -39,7 +43,12 @@ export default function CadastroItem() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Cadastro de Item</Text>
-
+            <TextInput
+                style={styles.input}
+                placeholder="Nome"
+                value={nome}
+                onChangeText={setnome}
+            />
             <TextInput
                 style={styles.input}
                 placeholder="Descrição"

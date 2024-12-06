@@ -19,7 +19,8 @@ async function criarItem(request, response) {
         .create({
             valor: request.body.valor,
             tipo: request.body.tipo,
-            descricao: request.body.descricao
+            descricao: request.body.descricao,
+            nome: request.body.nome
         })
         .then(resultado => {response.status(200).json(resultado)})
         .catch(erro => {response.status(400).json(erro)});
