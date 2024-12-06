@@ -1,5 +1,6 @@
 import pedido from "../model/PedidoModel.js";
 import comanda from "../model/ComandaModel.js";
+import cardapio from "../model/CardapioModel.js";
 
 
 // Função para listar todos os pedidos da comanda
@@ -87,6 +88,14 @@ async function alterarpedido(request, response) {
 async function listarPedidosCozinha(request, response) {
     await pedido
         .findAll({
+            attributes: ['id_pedido', 'id_comanda', 'quantidade', 'status', 'tipo'],
+            include: [
+                {
+                    model: cardapio,
+                    attributes: ['nome', 'descricao'],
+                    as: 'itens'
+                }
+            ],
             where: {
                 tipo: true // verifica se o pedido é feito na cozinha
             }
@@ -105,8 +114,17 @@ async function listarPedidosCozinha(request, response) {
 async function listarPedidosCopa(request, response) {
     await pedido
         .findAll({
+            attributes: ['id_pedido', 'id_comanda', 'quantidade', 'status', 'tipo'],
+            include: [
+                {
+                    model: cardapio,
+                    attributes: ['nome', 'descricao'],
+                    as: 'itens'
+                }
+            ],
             where: {
-                tipo: false // verifica se o pedido é feito na copa
+                tipo: false, // verifica se o pedido é feito na copa
+                status: false
             }
         })
         .then(resultado => {
@@ -120,21 +138,51 @@ async function listarPedidosCopa(request, response) {
 }
 
 async function listarPedidosPendentes(request, response) {
-    await pedido
-        .findAll({
+    try {
+        const resultado = await pedido.findAll({
+            attributes: ['id_pedido', 'id_comanda', 'quantidade', 'status', 'tipo'],
+            include: [
+                {
+                    model: cardapio,
+                    attributes: ['nome', 'descricao'],
+                    as: 'itens'
+                }
+            ],
             where: {
                 status: false
             }
-        })
-        .then(resultado => {
-            if (resultado.length > 0){
-                response.status(200).json(resultado)
-            } else {
-                response.status(404).json({mensagem: "Nenhum pedido foi feito ainda"})
-            }
-        })
-        .catch(erro => response.status(500).json(erro))
+        });
+
+        if (resultado.length > 0) {
+            response.status(200).json(resultado);
+        } else {
+            response.status(404).json({ mensagem: "Nenhum pedido foi feito ainda" });
+        }
+    } catch (erro) {
+        response.status(500).json(erro);
+    }
 }
 
+async function alterarStatusPedido(request, response) {
+    await pedido
+        .update(
+            {
+                status: true
+            },
+            {
+                where: {
+                    id_pedido: request.params.id_pedido
+                }
+            }
+        )
+        .then(resultado => {
+            if (resultado[0] === 1) { // Verifica se alguma linha foi alterada
+                response.status(200).json({ mensagem: "Comanda atualizada com sucesso" });
+            } else {
+                response.status(404).json({ mensagem: "Comanda não encontrada" });
+            }
+        })
+        .catch(erro => response.status(400).json(erro));
+}
 
-export default { listarpedidos, selecionaritem, criarpedido, alterarpedido, selecionarComandaitem, listarPedidosCozinha, listarPedidosCopa, listarPedidosPendentes };
+export default { listarpedidos, selecionaritem, criarpedido, alterarpedido, selecionarComandaitem, listarPedidosCozinha, listarPedidosCopa, listarPedidosPendentes, alterarStatusPedido };

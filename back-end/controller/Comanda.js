@@ -34,13 +34,11 @@ async function criarComanda(request, response) {
 }
 
 // Função para alterar uma comanda existente
-async function alterarComanda(request, response) {
+async function fecharComanda(request, response) {
     await comanda
         .update(
             {
-                num_mesa: request.body.nummesa,
-                quantidade: request.body.quantidade,
-                valor: request.body.valor
+                fechada: true,
             },
             {
                 where: {
@@ -50,7 +48,29 @@ async function alterarComanda(request, response) {
         )
         .then(resultado => {
             if (resultado[0] === 1) { // Verifica se alguma linha foi alterada
-                response.status(200).json({ mensagem: "Comanda atualizada com sucesso" });
+                response.status(200).json({ mensagem: "Comanda fechada" });
+            } else {
+                response.status(404).json({ mensagem: "Comanda não encontrada" });
+            }
+        })
+        .catch(erro => response.status(400).json(erro));
+}
+
+async function abrirComanda(request, response) {
+    await comanda
+        .update(
+            {
+                fechada: true,
+            },
+            {
+                where: {
+                    id_comanda: request.params.id_comanda
+                }
+            }
+        )
+        .then(resultado => {
+            if (resultado[0] === 1) { // Verifica se alguma linha foi alterada
+                response.status(200).json({ mensagem: "Comanda aberta" });
             } else {
                 response.status(404).json({ mensagem: "Comanda não encontrada" });
             }
@@ -76,4 +96,4 @@ async function excluirComanda(request, response) {
         .catch(erro => response.status(400).json(erro));
 }
 
-export default { listarComandas, selecionarComanda, criarComanda, alterarComanda, excluirComanda };
+export default { listarComandas, selecionarComanda, criarComanda, fecharComanda, abrirComanda, excluirComanda };

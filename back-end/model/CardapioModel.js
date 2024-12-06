@@ -8,6 +8,10 @@ export default banco.define("cardapio", {
         autoIncrement: true,
         allowNull: false
     },
+    nome: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     valor: {
         type: Sequelize.FLOAT,
         allowNull: false
