@@ -1,8 +1,9 @@
 import { Sequelize } from "sequelize";
 import banco from "../banco.js";
 import cardapio from "./CardapioModel.js";
+import comanda from "./ComandaModel.js";
 
-export const pedido = banco.define("pedido", {
+const pedido = banco.define("pedido", {
     id_pedido: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -13,7 +14,7 @@ export const pedido = banco.define("pedido", {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: 'Comanda',
+            model: comanda,
             key: 'id_comanda'
         }
     },
@@ -21,7 +22,7 @@ export const pedido = banco.define("pedido", {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: 'Cardapio',
+            model: cardapio,
             key: 'cod_item'
         }
     },
@@ -31,7 +32,7 @@ export const pedido = banco.define("pedido", {
     },
     status: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
+        allowNull: false
     },
     tipo: {
         type: Sequelize.BOOLEAN,
@@ -39,7 +40,10 @@ export const pedido = banco.define("pedido", {
     }
 });
 
+cardapio.hasMany(pedido, { foreignKey: 'cod_item' });
+pedido.belongsTo(cardapio, { as: 'itens', foreignKey: 'cod_item' });
 
-pedido.belongsTo(cardapio, { foreignKey: 'cod_item' });
+comanda.hasMany(pedido, { foreignKey: 'id_comanda' });
+pedido.belongsTo(comanda, { foreignKey: 'id_comanda' });
 
 export default pedido;
