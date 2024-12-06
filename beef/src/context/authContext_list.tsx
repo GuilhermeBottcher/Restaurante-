@@ -64,7 +64,7 @@ export const AuthProviderList = (props: any): any => {
       setItem("");
       setComanda("");
       setQuantidade("");
-      setTipo("copa"); // Reseta o valor de tipo para 'copa'
+      setTipo("copa");
     };
 
     return (
@@ -101,16 +101,16 @@ export const AuthProviderList = (props: any): any => {
             value={quantidade}
             onChangeText={setQuantidade}
           />
-          <View style={styles.boxMid}>
           <Text style={styles.label}>Tipo</Text>
-          <Picker
-            selectedValue={tipo}
-            onValueChange={(itemValue) => setTipo(itemValue)}
-          >
-            <Picker.Item label="Cozinha" value="cozinha" />
-            <Picker.Item label="Copa" value="copa" />
-          </Picker>
-          </View>
+
+            <Picker
+              selectedValue={tipo}
+              onValueChange={(itemValue) => setTipo(itemValue)}
+              style={styles.picker}
+            >
+              <Picker.Item label="Cozinha" value="cozinha" />
+              <Picker.Item label="Copa" value="copa" />
+            </Picker>
         </View>
       </View>
     );
@@ -158,16 +158,12 @@ const styles = StyleSheet.create({
     color: "#000",
     marginTop: 10,
   },
-  input:{
-    height:'100%',
-    width:'90%',
-    borderRadius:40,
-    paddingLeft:5   
-},
-boxMid:{
-  backgroundColor:themas.colors.branco,
-  height:Dimensions.get('window').height/4,
-  width:'100%',
-  paddingHorizontal:37
-},
+
+  picker: {
+    height: 40,
+    width: '100%',
+    
+    borderRadius: 40,
+    paddingLeft: 5,
+  },
 });
