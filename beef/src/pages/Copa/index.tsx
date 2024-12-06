@@ -5,8 +5,19 @@ import axios from "axios";
 import { styles } from "./style";
 import { Flag } from "../../components/flag"; 
 
+type Pedido = {
+  id_pedido: number;
+  id_comanda: number;
+  quantidade: number;
+  status: boolean;
+  itens?: {
+    descricao: string;
+    nome: string;
+  };
+};
+
 export const Copa = () => {
-  const [pedidos, setPedidos] = useState([]);
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
