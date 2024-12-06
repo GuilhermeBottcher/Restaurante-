@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Flag } from "../../components/flag";
 import { View, Text, StyleSheet, FlatList, Alert } from "react-native";
 import axios from "axios";
 
@@ -37,10 +38,10 @@ export const Copa = () => {
       <Text style={styles.text}>
         <Text style={styles.label}>Quantidade:</Text> {item.quantidade}
       </Text>
-      <Text style={styles.text}>
-        <Text style={styles.label}>Status:</Text>{" "}
-        {item.status ? "Pronto" : "Pendente"}
-      </Text>
+      <Flag
+        color={item.status ? "green" : "orange"} 
+        caption={item.status ? "Pronto" : "Pendente"} 
+      />
     </View>
   );
 
