@@ -75,7 +75,7 @@ async function alterarpedido(request, response) {
             }
         )
         .then(resultado => {
-            if (resultado[0] === 1) { // Verifica se alguma linha foi alterada
+            if (resultado[0] === 1) { 
                 response.status(200).json({ mensagem: "Comanda atualizada com sucesso" });
             } else {
                 response.status(404).json({ mensagem: "Comanda não encontrada" });
@@ -84,7 +84,7 @@ async function alterarpedido(request, response) {
         .catch(erro => response.status(400).json(erro));
 }
 
-// lista pedidos da cozinha
+
 async function listarPedidosCozinha(request, response) {
     await pedido
         .findAll({
