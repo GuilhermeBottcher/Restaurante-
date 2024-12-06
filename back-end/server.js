@@ -37,6 +37,8 @@ app.patch("/cardapio/:cod_item", cardapio.criarItem)
 app.get("/comanda", Comanda.listarComandas);
 app.get("/comanda/:id_comanda", Comanda.selecionarComanda);
 app.post("/comanda", Comanda.criarComanda);
+app.put("/fechar-comanda/id_comanda", Comanda.fecharComanda);
+app.put("/abrir-comanda/id_comanda", Comanda.abrirComanda);
 
 //medotos pedido
 
@@ -48,6 +50,7 @@ app.get("/copa/pedidos", Pedido.listarPedidosCopa);
 app.get("/pedidos/status/pendentes", Pedido.listarPedidosPendentes)
 app.post("/pedido", Pedido.criarpedido);
 app.patch("/pedido/:id_pedido", Pedido.alterarpedido);
+app.put("/pedido/alterar-status/:id_pedido", Pedido.alterarStatusPedido);
 
 // métodos usuario
 app.post("/login", Usuario.validarLogin);
