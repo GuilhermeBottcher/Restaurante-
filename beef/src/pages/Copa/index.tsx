@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Flag } from "../../components/flag";
-import { View, Text, StyleSheet, FlatList, Alert } from "react-native";
+import { View, Text, StyleSheet, FlatList, Alert, Touchable } from "react-native";
 import axios from "axios";
 
 export const Copa = () => {

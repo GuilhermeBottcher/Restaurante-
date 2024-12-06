@@ -39,7 +39,7 @@ export const pedido = banco.define("pedido", {
     }
 });
 
-// Relacionamento entre Pedido e Cardapio
+
 pedido.belongsTo(cardapio, { foreignKey: 'cod_item' });
 
 export default pedido;
