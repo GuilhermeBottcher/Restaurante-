@@ -45,7 +45,8 @@ export default function Inicial() {
                     <View style={style.rowCardLeft}>
                         <Ball color="red" />
                         <View>
-                            <Text style={style.tittleCard}>Mesa: {item.num_mesa}</Text>
+                            <Text style={style.tittleCard}>Comanda: {item.id_comanda}</Text>
+                            <Text></Text>
                             <Text>Valor: R$ {item.valor?.toFixed(2)}</Text>
                         </View>
                     </View>
