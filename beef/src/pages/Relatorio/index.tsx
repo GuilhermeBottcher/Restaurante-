@@ -17,7 +17,7 @@ export default function Relatorio() {
 
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:4000/api/relatorios/vendas-diarias", {
+      const response = await axios.get("http://localhost:4000/relatorios/vendas-diarias", {
         params: { data }, // Envia a data como parâmetro para o backend
       });
       if (response.status === 200) {
